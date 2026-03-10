@@ -2,11 +2,11 @@
   <div class="min-h-screen flex flex-col relative">
     <!-- 全局背景图片 -->
     <div
-      v-if="backgroundUrl"
+      v-if="currentBackgroundUrl"
       class="fixed inset-0 z-0"
     >
       <img
-        :src="backgroundUrl"
+        :src="currentBackgroundUrl"
         alt="背景"
         class="w-full h-full object-cover"
       />
@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-import { watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import { useSettingsStore } from '~/stores/settings'
 import { useToastStore } from '~/stores/toast'
@@ -170,6 +170,13 @@ const appName = computed(() => settingsStore.appSettings.appName || 'EasyImg')
 const appLogo = computed(() => settingsStore.appSettings.appLogo || '/favicon.png')
 const backgroundUrl = computed(() => settingsStore.appSettings.backgroundUrl || '')
 const backgroundBlur = computed(() => settingsStore.appSettings.backgroundBlur || 0)
+const bingDailyBackgroundUrl = ref('')
+const currentBackgroundUrl = computed(() => {
+  if (route.path === '/') {
+    return bingDailyBackgroundUrl.value || backgroundUrl.value
+  }
+  return backgroundUrl.value
+})
 
 // 获取 favicon MIME 类型
 function getFaviconType(url) {
@@ -204,13 +211,40 @@ watch(appLogo, (newLogo) => {
   updateFavicon(newLogo)
 }, { immediate: true })
 
+
+watch(
+  () => route.path,
+  async (newPath) => {
+    if (newPath === '/' && !bingDailyBackgroundUrl.value) {
+      await fetchBingDailyBackground()
+    }
+  }
+)
+
 // 动态设置页面标题
 useHead({
   title: appName
 })
 
+
+async function fetchBingDailyBackground() {
+  try {
+    const response = await $fetch('/api/bing/daily')
+    if (response.success && response.data?.localUrl) {
+      bingDailyBackgroundUrl.value = response.data.localUrl
+    }
+  } catch (error) {
+    console.error('获取 Bing 每日背景失败:', error)
+  }
+}
+
 // 初始化
 onMounted(async () => {
+  // 首页优先加载 Bing 每日图片作为背景
+  if (route.path === '/') {
+    await fetchBingDailyBackground()
+  }
+
   // 先获取公共应用设置（无需登录，包含背景图片等）
   await settingsStore.fetchPublicAppSettings()
 

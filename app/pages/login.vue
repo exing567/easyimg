@@ -10,7 +10,7 @@
           </div>
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">管理员登录</h1>
           <div class="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>EasyImg - 面向个人的图床应用</p>
+            <p>欢迎NECT家人回家！</p>
           </div>
         </div>
 
