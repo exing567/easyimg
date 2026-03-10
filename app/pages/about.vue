@@ -16,10 +16,6 @@
               <p class="text-gray-700 dark:text-gray-300 text-sm">
                 本网站基于原仓库修改而来，下面同时保留本仓库与原仓库地址：
               </p>
-              <div class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <Icon name="heroicons:lock-closed" class="w-4 h-4 text-amber-500" />
-                <span>此图床专为 NECT 使用。</span>
-              </div>
               <div class="flex flex-wrap items-center gap-2 text-sm">
                 <span class="text-gray-700 dark:text-gray-300">本仓库:</span>
                 <a
