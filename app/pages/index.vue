@@ -3,6 +3,9 @@
     <section class="hero-panel mb-8">
       <div class="hero-grid-overlay"></div>
       <div class="hero-content">
+
+        <p class="hero-tag">XJJ // IMAGE TERMINAL</p>
+        <h1 class="hero-title">XJJ图床</h1>
         <p class="hero-tag">EASYIMG // IMAGE TERMINAL</p>
         <h1 class="hero-title">上传、管理、分发图片的极客工作台</h1>
         <p class="hero-subtitle">
