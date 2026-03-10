@@ -89,38 +89,14 @@ _✨ 简单易用的个人图床系统，基于 Nuxt.js 构建 ✨_
 ### Docker Compose 部署（推荐）
 
 ```bash
-# 1. 创建 easyimg 目录
-mkdir -p /root/easyimg && cd /root/easyimg
-
-
-# 2. 下载docker-compose.yml文件
-wget https://git.221022.xyz/https://raw.githubusercontent.com/chaos-zhu/easyimg/refs/heads/main/docker-compose.yml
-
-# 使用 docker-compose
-docker compose up -d
+# 一键安装并启动（自动下载 compose 文件并后台运行）
+mkdir -p /root/easyimg && cd /root/easyimg && curl -fsSL https://raw.githubusercontent.com/exing567/easyimg/main/docker-compose.yml -o docker-compose.yml && docker compose up -d
 ```
 
 ### Docker run部署
 
 ```bash
-docker run -d --name easyimg -p 3000:3000 -v ./db:/app/db -v ./uploads:/app/uploads ghcr.io/chaos-zhu/easyimg:latest
-```
-
-
-### 手动部署
-
-```bash
-# 安装依赖
-pnpm install
-
-# 开发模式
-pnpm dev
-
-# 构建生产版本
-pnpm build
-
-# 启动生产服务
-node .output/server/index.mjs
+docker run -d --name easyimg -p 3000:3000 -v ./db:/app/db -v ./uploads:/app/uploads ghcr.io/exing567/easyimg:latest
 ```
 
 ### 默认账户
@@ -182,4 +158,3 @@ volumes:
 ## 开源协议
 
 [Apache-License2.0](LICENSE)
-
