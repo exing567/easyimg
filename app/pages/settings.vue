@@ -103,6 +103,22 @@
             </div>
           </div>
 
+          <!-- Bing 每日背景缓存 -->
+          <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-4 bg-gray-50/80 dark:bg-gray-800/50">
+            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Bing 每日背景缓存</p>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              首页会使用 Bing 每日图片作为背景，图片缓存目录：<code>/bingdaily</code>。
+            </p>
+            <button
+              type="button"
+              class="btn-secondary mt-3"
+              :disabled="clearingBingCache"
+              @click="clearBingCache"
+            >
+              {{ clearingBingCache ? '清空中...' : '清空 Bing 图片缓存' }}
+            </button>
+          </div>
+
           <!-- 站点 URL -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -298,6 +314,7 @@ const appSettings = reactive({
 const logoError = ref(false)
 const backgroundError = ref(false)
 const savingApp = ref(false)
+const clearingBingCache = ref(false)
 
 // 公告设置
 const announcementSettings = reactive({
@@ -317,6 +334,24 @@ const passwordForm = reactive({
   confirmPassword: ''
 })
 const savingPassword = ref(false)
+
+
+async function clearBingCache() {
+  clearingBingCache.value = true
+
+  try {
+    const result = await settingsStore.clearBingCache()
+    if (result.success) {
+      toastStore.success(result.message || `已清空 ${result.count} 张 Bing 缓存图片`)
+    } else {
+      toastStore.error(result.message || '清空缓存失败')
+    }
+  } catch (error) {
+    toastStore.error('清空缓存失败')
+  } finally {
+    clearingBingCache.value = false
+  }
+}
 
 // 保存应用设置
 async function saveAppSettings() {
