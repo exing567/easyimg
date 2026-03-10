@@ -285,6 +285,26 @@ export const useSettingsStore = defineStore('settings', {
       }
     },
 
+    // 清空 Bing 每日图片缓存
+    async clearBingCache() {
+      const authStore = useAuthStore()
+
+      try {
+        const response = await $fetch('/api/settings/bing-cache-clear', {
+          method: 'POST',
+          headers: authStore.authHeader
+        })
+
+        if (response.success) {
+          return { success: true, message: response.message, count: response.data?.deletedCount || 0 }
+        }
+
+        return { success: false, message: response.message }
+      } catch (error) {
+        return { success: false, message: error.data?.message || '清空缓存失败' }
+      }
+    },
+
     // 硬删除所有软删除的图片
     async hardDeleteImages() {
       const authStore = useAuthStore()

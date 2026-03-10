@@ -1,5 +1,27 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="home-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <section class="hero-panel mb-8">
+      <div class="hero-grid-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-tag">XJJ // IMAGE TERMINAL</p>
+        <h1 class="hero-title">XJJ图床</h1>
+        <p class="hero-subtitle">
+          支持批量上传、右键快捷操作与格式化链接复制，保留你熟悉的流程，只升级视觉体验。
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <span class="hero-stat-label">图库</span>
+            <strong class="hero-stat-value">{{ imagesStore.images.length }}</strong>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-label">状态</span>
+            <strong class="hero-stat-value">{{ authStore.isAuthenticated ? 'Admin Online' : 'Guest Mode' }}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="hero-glow"></div>
+    </section>
+
     <!-- 公告组件 - 顶部横幅形式显示在上传区域上方 -->
     <Announcement />
 
@@ -11,7 +33,7 @@
     <!-- 批量操作栏 -->
     <div
       v-if="authStore.isAuthenticated && imagesStore.hasSelection"
-      class="sticky top-20 z-30 mb-4 p-4 card flex items-center justify-between"
+      class="sticky top-20 z-30 mb-4 p-4 card batch-toolbar flex items-center justify-between"
     >
       <div class="flex items-center gap-4">
         <button
@@ -223,6 +245,10 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
+
+definePageMeta({
+  title: 'XJJ图床'
+})
 import { useAuthStore } from '~/stores/auth'
 import { useImagesStore } from '~/stores/images'
 import { useSettingsStore } from '~/stores/settings'
@@ -595,6 +621,104 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.home-page {
+  position: relative;
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(14, 165, 233, 0.28);
+  background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.24), transparent 40%),
+              radial-gradient(circle at 85% 10%, rgba(168, 85, 247, 0.2), transparent 38%),
+              linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.98));
+  box-shadow: 0 24px 45px -30px rgba(14, 165, 233, 0.55);
+}
+
+.hero-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
+}
+
+.hero-tag {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: #7dd3fc;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.hero-subtitle {
+  margin: 0.75rem 0 1rem;
+  max-width: 60ch;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-stat-item {
+  min-width: 132px;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.32);
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.hero-stat-label {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero-stat-value {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.hero-glow {
+  position: absolute;
+  right: -56px;
+  bottom: -70px;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.24), rgba(56, 189, 248, 0));
+  pointer-events: none;
+}
+
+.batch-toolbar {
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(6px);
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.15s ease;
@@ -619,5 +743,11 @@ onUnmounted(() => {
 
 .masonry-item {
   break-inside: avoid;
+}
+
+@media (max-width: 640px) {
+  .hero-content {
+    padding: 1.1rem;
+  }
 }
 </style>
