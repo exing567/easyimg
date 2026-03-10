@@ -20,6 +20,7 @@
                 <Icon name="heroicons:lock-closed" class="w-4 h-4 text-amber-500" />
                 <span>此图床专为 NECT 使用。</span>
               </div>
+
               <div class="flex flex-wrap items-center gap-2 text-sm">
                 <span class="text-gray-700 dark:text-gray-300">本仓库:</span>
                 <a
