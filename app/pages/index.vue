@@ -245,6 +245,10 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
+
+definePageMeta({
+  title: 'XJJ图床'
+})
 import { useAuthStore } from '~/stores/auth'
 import { useImagesStore } from '~/stores/images'
 import { useSettingsStore } from '~/stores/settings'

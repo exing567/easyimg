@@ -42,15 +42,13 @@
           </div>
 
           <div class="flex items-center gap-3">
-            <Icon name="simple-icons:telegram" class="w-5 h-5 text-blue-500" />
-            <span class="text-gray-700 dark:text-gray-300">TG频道:</span>
+            <Icon name="heroicons:envelope" class="w-5 h-5 text-primary-500" />
+            <span class="text-gray-700 dark:text-gray-300">Abuse 联系:</span>
             <a
-              href="https://t.me/easynode_notify"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:hello@xjj.sh"
               class="text-primary-600 dark:text-primary-400 hover:underline"
             >
-              https://t.me/easynode_notify
+              hello@xjj.sh
             </a>
           </div>
         </div>
